@@ -65,5 +65,4 @@ app:scheduleAction(0.05, true, function ()
     confetti:animate()
 end)
 
-app:connect()
-app:run()
+if app:connect() then app:run() end
