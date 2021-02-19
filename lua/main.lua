@@ -41,7 +41,7 @@ Confetti = pl.class(ui.View)
 function Confetti:_init(bounds)
     self:super(bounds or ui.Bounds(0,1,0,1,1,1))
     self.flakes = {}
-    for i = 0, 100 do
+    for i = 0, 10 do
         table.insert(self.flakes, Flake())
     end
     
