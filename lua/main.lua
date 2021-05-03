@@ -23,6 +23,8 @@ function Flake:reset()
     self.v = vec3(math.random()-0.5, math.random()*3, math.random()-0.5)
     self.p = vec3(math.random()-0.5, 0, math.random()-0.5)
     self.color = { math.random(), math.random(), math.random()}
+    self.metalness = math.random()
+    self.roughness = math.random()
 end
 
 function Flake:animate()
@@ -41,12 +43,18 @@ Confetti = pl.class(ui.View)
 function Confetti:_init(bounds)
     self:super(bounds or ui.Bounds(0,1,0,1,1,1))
     self.flakes = {}
-    for i = 0, 10 do
+    for i = 0, 20 do
         table.insert(self.flakes, Flake())
     end
-    
 
     for _, view in ipairs(self.flakes) do
+        local s = view.specification
+        view.specification = function ()
+            local spec = s(view)
+            spec.material.roughness = 0
+            spec.material.metalness = 0
+            return spec
+        end
         self:addSubview(view)
     end
 end
