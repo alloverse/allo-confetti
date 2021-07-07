@@ -10,6 +10,11 @@ local client = Client(
 )
 local app = ui.App(client)
 
+assets = {
+    quit = ui.Asset.File("images/quit.png"),
+}
+app.assetManager:add(assets)
+
 Flake = pl.class(ui.Surface)
 function Flake:_init(x,y,z)
     local s = 0.1
@@ -68,6 +73,17 @@ local confetti = Confetti()
 
 app.mainView:addSubview(confetti)
 confetti.grabbable = true
+
+local quitButton = app.mainView:addSubview(ui.Button(
+    ui.Bounds{size=ui.Size(0.12,0.12,0.05)}
+        :move( app.mainView.bounds.size:getEdge("bottom", "right", "front") )
+))
+quitButton:setDefaultTexture(assets.quit)
+quitButton.onActivated = function()
+    app:quit()
+end
+
+
 -- run the animation
 app:scheduleAction(0.05, true, function ()
     confetti:animate()
