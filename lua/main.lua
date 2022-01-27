@@ -27,9 +27,9 @@ function Flake:reset()
     self.axis = vec3(math.random(), math.random(), math.random()):normalize()
     self.v = vec3(math.random()-0.5, math.random()*3, math.random()-0.5)
     self.p = vec3(math.random()-0.5, 0, math.random()-0.5)
-    self.color = { math.random(), math.random(), math.random()}
-    self.metalness = math.random()
-    self.roughness = math.random()
+    self.material.color = { math.random(), math.random(), math.random()}
+    self.material.metalness = math.random()
+    self.material.roughness = math.random()
 end
 
 function Flake:animate()
@@ -53,13 +53,8 @@ function Confetti:_init(bounds)
     end
 
     for _, view in ipairs(self.flakes) do
-        local s = view.specification
-        view.specification = function ()
-            local spec = s(view)
-            spec.material.roughness = 0
-            spec.material.metalness = 0
-            return spec
-        end
+        view.material.roughness = 0
+        view.material.metalness = 0
         self:addSubview(view)
     end
 end
